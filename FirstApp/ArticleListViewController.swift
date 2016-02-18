@@ -7,6 +7,7 @@ class ArticleListViewController: UIViewController, UITableViewDataSource, UITabl
 	
 	
 	var articles : [[String: String?]] = [] // 記事を入れるプロパティを定義
+	var selectedArticle : [String: String?]!
 	
 	func getArticles() {
 		Alamofire.request(.GET, "https://qiita.com/api/v2/items")
@@ -57,7 +58,14 @@ class ArticleListViewController: UIViewController, UITableViewDataSource, UITabl
 	
 	// セルが選択された時の処理
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let selectedArticle = articles[indexPath.row]
-		print(selectedArticle)
+		selectedArticle = articles[indexPath.row]
+		performSegueWithIdentifier("toArticleViewController", sender: nil)
+	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if (segue.identifier == "toArticleViewController") {
+			let articleVC : ArticleViewController = (segue.destinationViewController as? ArticleViewController)!
+			articleVC.article = selectedArticle
+		}
 	}
 }
