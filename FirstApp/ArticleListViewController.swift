@@ -35,6 +35,7 @@ class ArticleListViewController: UIViewController, UITableViewDataSource, UITabl
 		table.frame = view.frame // tableの大きさをviewの大きさに合わせる
 		view.addSubview(table) // viewにtableを乗せる
 		table.dataSource = self
+		table.delegate = self
 		getArticles()
     }
 
@@ -54,7 +55,9 @@ class ArticleListViewController: UIViewController, UITableViewDataSource, UITabl
 		return cell
 	}
 	
-	// 押された時の処理
+	// セルが選択された時の処理
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		let selectedArticle = articles[indexPath.row]
+		print(selectedArticle)
 	}
 }
